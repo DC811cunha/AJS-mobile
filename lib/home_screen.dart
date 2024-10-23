@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// Classe principal da tela Home, usando StatelessWidget pois não há estado dinâmico na tela
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  // Função para abrir o link do Instagram
+  // Função assíncrona para abrir o link do Instagram no navegador
   Future<void> _abrirInstagram(BuildContext context) async {
     const String url =
-        'https://www.instagram.com/ajoinvilleskate?igsh=MW1kNTFmb2xlcGtteQ==';
+        'https://www.instagram.com/ajoinvilleskate?igsh=MW1kNTFmb2xlcGtteQ=='; // URL do Instagram
 
-    // Verifica se o dispositivo pode abrir o link
+    // Verifica se o link pode ser aberto por algum navegador disponível no dispositivo
     if (await canLaunch(url)) {
-      await launch(url);
+      await launch(url); // Abre o link no navegador
     } else {
-      // Usa o ScaffoldMessenger associado ao contexto do Scaffold
+      // Exibe um Snackbar se não for possível abrir o link
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
               'Não foi possível abrir o link do Instagram. Verifique se há um navegador disponível.'),
-          duration: Duration(seconds: 3), // Duração do Snackbar
+          duration: Duration(seconds: 3), // O Snackbar dura 3 segundos
         ),
       );
     }
@@ -27,131 +28,132 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Estrutura principal da tela Home
       appBar: AppBar(
-        backgroundColor: Colors.grey[200],
-        elevation: 0,
+        backgroundColor: Colors.grey[200], // Define a cor de fundo do AppBar
+        elevation: 0, // Remove a sombra do AppBar
         leading: Builder(
           builder: (context) {
+            // Botão de menu hambúrguer no AppBar para abrir o Drawer
             return IconButton(
-              icon: const Icon(Icons.menu, color: Colors.black),
+              icon: const Icon(Icons.menu, color: Colors.black), // Ícone de menu em preto
               onPressed: () {
-                Scaffold.of(context).openDrawer();
+                Scaffold.of(context).openDrawer(); // Abre o Drawer lateral
               },
             );
           },
         ),
         actions: [
+          // Ícone de perfil no AppBar para navegação para a tela de login
           IconButton(
-            icon: const Icon(Icons.person, color: Colors.black),
+            icon: const Icon(Icons.person, color: Colors.black), // Ícone de perfil em preto
             onPressed: () {
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/'); // Navega para a página de login
             },
           ),
         ],
       ),
+      // Define o Drawer (menu lateral) da tela
       drawer: Drawer(
-        // Use um Container para envolver o Drawer e adicionar estilo
+        // Envolve o Drawer em um Container para personalizar o estilo
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.9), // Cor com transparência
+            color: Colors.white.withOpacity(0.9), // Define uma cor branca com transparência para o Drawer
             borderRadius: const BorderRadius.only(
               topRight: Radius.circular(16.0),
               bottomRight: Radius.circular(16.0),
-            ), // Bordas arredondadas na direita
+            ), // Define bordas arredondadas no lado direito do Drawer
           ),
+          // Lista de opções no Drawer
           child: ListView(
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.zero, // Remove qualquer padding adicional na lista
             children: [
-              // Melhorando o Drawer Header
+              // Cabeçalho do Drawer com logo e possível mensagem de boas-vindas
               DrawerHeader(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.grey[800]!, Colors.grey[500]!], // Gradiente de cinza escuro a médio
+                    colors: [Colors.grey[800]!, Colors.grey[500]!], // Define um gradiente de cinza escuro para cinza médio
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                 ),
                 child: Row(
                   children: [
+                    // Logo circular dentro do Drawer Header
                     CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage(
-                          'assets/images/logoNormal.png'), // Substitua pelo caminho da sua logo
+                      radius: 30, // Tamanho da logo
+                      backgroundImage: AssetImage('assets/images/logoNormal.png'), // Caminho para a logo
                     ),
-                    const SizedBox(width: 16),
-                    /*const Text(
-                      'Bem-vindo!',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),*/
+                    const SizedBox(width: 16), // Espaçamento entre a logo e o possível texto
+                    // Espaço para uma mensagem de boas-vindas (comentado no momento)
                   ],
                 ),
               ),
-              // ListTile com ícone personalizado e título estilizado
+              // ListTile que representa uma opção no menu "Quem somos"
               ListTile(
-                leading: const Icon(Icons.info, color: Color.fromARGB(172, 189, 189, 189)),
+                leading: const Icon(Icons.info, color: Color.fromARGB(172, 189, 189, 189)), // Ícone cinza
                 title: const Text(
-                  'Quem somos',
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                  'Quem somos', // Texto do item do menu
+                  style: TextStyle(fontSize: 18, color: Colors.black87), // Estilo do texto
                 ),
                 onTap: () {
-                  // Ação para navegar à página "Quem somos"
+                  // Ação a ser executada ao clicar no item "Quem somos"
                 },
               ),
+              // ListTile que representa uma opção para acessar o Instagram
               ListTile(
-                leading: const Icon(Icons.camera, color: Color.fromARGB(172, 189, 189, 189)),
+                leading: const Icon(Icons.camera, color: Color.fromARGB(172, 189, 189, 189)), // Ícone cinza
                 title: const Text(
-                  'Instagram',
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                  'Instagram', // Texto do item do menu
+                  style: TextStyle(fontSize: 18, color: Colors.black87), // Estilo do texto
                 ),
                 onTap: () {
-                  Navigator.of(context)
-                      .pop(); // Fecha o Drawer antes de abrir o link
-                  _abrirInstagram(context); // Passa o contexto do Scaffold
+                  Navigator.of(context).pop(); // Fecha o Drawer
+                  _abrirInstagram(context); // Abre o Instagram chamando a função _abrirInstagram
                 },
               ),
+              // ListTile que representa uma opção para acessar a página de login
               ListTile(
-                leading: const Icon(Icons.login, color: Color.fromARGB(172, 189, 189, 189)),
+                leading: const Icon(Icons.login, color: Color.fromARGB(172, 189, 189, 189)), // Ícone cinza
                 title: const Text(
-                  'Login',
-                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                  'Login', // Texto do item do menu
+                  style: TextStyle(fontSize: 18, color: Colors.black87), // Estilo do texto
                 ),
                 onTap: () {
-                  Navigator.pushNamed(context, '/');
+                  Navigator.pushNamed(context, '/'); // Navega para a página de login
                 },
               ),
             ],
           ),
         ),
       ),
+      // Corpo principal da tela (conteúdo da Home)
       body: Column(
         children: [
-          const SizedBox(height: 20),
+          const SizedBox(height: 20), // Espaçamento no topo
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0), // Define o espaçamento horizontal para o campo de busca
             child: TextField(
               decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Pesquise aqui seu evento',
-                suffixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(), // Adiciona uma borda ao redor do campo de texto
+                labelText: 'Pesquise aqui seu evento', // Rótulo do campo de busca
+                suffixIcon: Icon(Icons.search), // Ícone de busca no lado direito do campo
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 20), // Espaçamento entre o campo de busca e o conteúdo a seguir
+          // Placeholder para a exibição de imagem de um evento
           Container(
-            height: 300,
-            width: double.infinity,
-            color: Colors.grey[300], // Placeholder para a imagem do evento
+            height: 300, // Altura do espaço reservado para a imagem do evento
+            width: double.infinity, // Define a largura do container como o tamanho total da tela
+            color: Colors.grey[300], // Define uma cor de fundo cinza claro para o placeholder
             child: const Center(
               child: Text(
-                'Imagem do Evento',
+                'Imagem do Evento', // Texto temporário que representa onde a imagem será exibida
                 style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Cor do texto
+                  fontSize: 18, // Tamanho da fonte do texto
+                  fontWeight: FontWeight.bold, // Define o texto em negrito
                 ),
               ),
             ),
