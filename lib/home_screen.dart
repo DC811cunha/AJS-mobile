@@ -50,43 +50,81 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
+        // Use um Container para envolver o Drawer e adicionar estilo
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.9), // Cor com transparência
+            borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(16.0),
+              bottomRight: Radius.circular(16.0),
+            ), // Bordas arredondadas na direita
+          ),
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              // Melhorando o Drawer Header
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.grey[800]!, Colors.grey[500]!], // Gradiente de cinza escuro a médio
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 30,
+                      backgroundImage: AssetImage(
+                          'assets/images/logoNormal.png'), // Substitua pelo caminho da sua logo
+                    ),
+                    const SizedBox(width: 16),
+                    /*const Text(
+                      'Bem-vindo!',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),*/
+                  ],
+                ),
               ),
-              child: Text(
-                'Menu',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+              // ListTile com ícone personalizado e título estilizado
+              ListTile(
+                leading: const Icon(Icons.info, color: Color.fromARGB(172, 189, 189, 189)),
+                title: const Text(
+                  'Quem somos',
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                ),
+                onTap: () {
+                  // Ação para navegar à página "Quem somos"
+                },
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('Quem somos'),
-              onTap: () {
-                // Ação para navegar à página "Quem somos"
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.camera),
-              title: const Text('Instagram'),
-              onTap: () {
-                // Agora estamos usando o contexto correto para o Snackbar
-                Navigator.of(context)
-                    .pop(); // Fecha o Drawer antes de mostrar o Snackbar
-                _abrirInstagram(context); // Passa o contexto do Scaffold
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.login),
-              title: const Text('Login'),
-              onTap: () {
-                Navigator.pushNamed(context, '/');
-              },
-            ),
-          ],
+              ListTile(
+                leading: const Icon(Icons.camera, color: Color.fromARGB(172, 189, 189, 189)),
+                title: const Text(
+                  'Instagram',
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                ),
+                onTap: () {
+                  Navigator.of(context)
+                      .pop(); // Fecha o Drawer antes de abrir o link
+                  _abrirInstagram(context); // Passa o contexto do Scaffold
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.login, color: Color.fromARGB(172, 189, 189, 189)),
+                title: const Text(
+                  'Login',
+                  style: TextStyle(fontSize: 18, color: Colors.black87),
+                ),
+                onTap: () {
+                  Navigator.pushNamed(context, '/');
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: Column(
