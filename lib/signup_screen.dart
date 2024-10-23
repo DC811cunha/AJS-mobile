@@ -13,21 +13,22 @@ class CadastroScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Placeholder para a logo (substituir mais tarde)
+              // Placeholder para a logo redonda
               SizedBox(
-                height: 150, // Espaço reservado para a logo
+                height: 150, // Tamanho do espaço da logo
                 child: Center(
-                  child: Text(
-                    'LOGO AQUI',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[600],
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/logoNormal.png', // Caminho da imagem
+                      height: 150, // Altura da imagem
+                      width:
+                          150, // Largura da imagem (deve ser igual à altura para ser perfeitamente redonda)
+                      fit: BoxFit.cover, // Ajusta a imagem dentro do círculo
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 40), // Espaçamento após a logo
 
               // Campo de nome completo
               const TextField(
@@ -74,18 +75,21 @@ class CadastroScreen extends StatelessWidget {
                   fillColor: Colors.white,
                 ),
               ),
-              const SizedBox(height: 20),/*----------------------------------------------------------------------------------------*/
+              const SizedBox(height: 20),
+              /*----------------------------------------------------------------------------------------*/
 
               // Botão de cadastrar (um pouco menor)
               SizedBox(
                 width: 250, // Diminuindo a largura do botão
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/home');// Lógica de cadastro
+                    Navigator.pushNamed(context, '/home'); // Lógica de cadastro
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue,
-                    padding: const EdgeInsets.symmetric(vertical: 12.0), // Ajuste no padding para o botão ficar menor
+                    padding: const EdgeInsets.symmetric(
+                        vertical:
+                            12.0), // Ajuste no padding para o botão ficar menor
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
