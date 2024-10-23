@@ -59,7 +59,10 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/logoNormal.png  # Adicione o caminho para o arquivo da logo
+    - assets/images/imageEvento1.jpg  # Adicione o caminho para o arquivo
+    - assets/images/imageEvento2.png  # Adicione o caminho para o arquivo
+    - assets/images/logoNormal.png  # Adicione o caminho para o arquivo
+    - assets/images/logoRedondaTransparente.png  # Adicione o caminho para o arquivo
 
   # To add assets to your application, add an assets section, like this:
   # assets:

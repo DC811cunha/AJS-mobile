@@ -97,7 +97,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, color: Colors.black87), // Estilo do texto
                 ),
                 onTap: () {
-                  // Ação a ser executada ao clicar no item "Quem somos"
+                  Navigator.pushNamed(context, '/somos'); // Ação a ser executada ao clicar no item "Quem somos"
                 },
               ),
               // ListTile que representa uma opção para acessar o Instagram

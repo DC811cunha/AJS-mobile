@@ -2,6 +2,7 @@ import 'package:flutter/material.dart'; // Importa o pacote principal do Flutter
 import 'login_screen.dart'; // Importa o arquivo da tela de login
 import 'signup_screen.dart'; // Importa o arquivo da tela de cadastro
 import 'home_screen.dart'; // Importa o arquivo da tela principal (Home)
+import 'somos_screen.dart'; // Importa o arquivo da tela de Quem Somos
 
 // Função principal que é o ponto de entrada do aplicativo
 void main() {
@@ -18,14 +19,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // MaterialApp é o widget principal do aplicativo, que cuida da navegação e temas
-      debugShowCheckedModeBanner: false, // Remove o banner de debug no canto superior direito
+      debugShowCheckedModeBanner:
+          false, // Remove o banner de debug no canto superior direito
       initialRoute: '/', // Define a rota inicial como a tela de login ("/")
-      
+
       // Define as rotas que podem ser navegadas no aplicativo
       routes: {
         '/': (context) => const LoginScreen(), // Rota inicial que leva para a tela de login
         '/signup': (context) => const CadastroScreen(), // Rota para a tela de cadastro
-        '/home': (context) => HomeScreen(), // Rota para a tela principal (Home)
+        '/home': (context) => const HomeScreen(), // Rota para a tela principal (Home)
+        '/somos': (context) => const SomosScreen(), // Rota para a tela Quem somos
       },
     );
   }
