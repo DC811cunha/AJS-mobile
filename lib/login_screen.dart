@@ -1,46 +1,46 @@
-import 'package:flutter/material.dart';
-import 'package:ajs/home_screen.dart';
-import 'package:ajs/signup_screen.dart';
+import 'package:flutter/material.dart'; //Importa o pacote principal do Flutter para construção da interface
+import 'package:ajs/home_screen.dart'; // Importa a tela inicial do aplicativo
+import 'package:ajs/signup_screen.dart'; // Importa a tela de cadastro
 
-// Classe principal da tela de login, utilizando StatelessWidget pois o conteúdo não muda durante a execução
+// Tela de login principal, utilizando StatelessWidget pois o conteúdo não é mutável
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  // Método build é responsável pela construção da interface da tela
+  // O método build é responsável por construir a interface da tela
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Define o Scaffold, que é a estrutura básica de uma tela em Flutter
+      // Define o Scaffold, estrutura básica para a organização da tela em Flutter
       backgroundColor: const Color.fromARGB(172, 189, 189,
-          189), // Cor de fundo do Scaffold, usando um tom de cinza claro com opacidade
+          189), // Define a cor de fundo como cinza claro com opacidade
 
       // Corpo principal da tela
       body: Center(
-        // Centra o conteúdo principal da tela
+        // Centraliza o conteúdo principal da tela
         child: SingleChildScrollView(
-          // Permite rolar o conteúdo se o teclado aparecer ou se não houver espaço suficiente
+          // Permite rolar o conteúdo, útil quando o teclado é exibido ou a tela é pequena
           padding: const EdgeInsets.symmetric(
               horizontal:
-                  24.0), // Define o espaçamento horizontal para as margens
+                  24.0), // Define o espaçamento horizontal nas laterais
           child: Column(
             mainAxisAlignment: MainAxisAlignment
-                .center, // Alinha o conteúdo da coluna ao centro verticalmente
+                .center, // Alinha os itens verticalmente ao centro
             children: [
-              // Espaço reservado para a logo redonda do aplicativo
+              // Espaço reservado para a exibição da logo redonda
               SizedBox(
-                height: 150, // Define a altura do espaço reservado para a logo
+                height: 150, // Altura reservada para a logo
                 child: Center(
-                  // Centraliza a logo dentro do espaço definido
+                  // Centraliza a logo dentro do espaço reservado
                   child: ClipOval(
-                    // Faz com que a imagem tenha um formato oval
+                    // Garante que a imagem da logo seja exibida de forma circular
                     child: Image.asset(
-                      'assets/images/logoNormal.png', // Caminho para a imagem da logo dentro dos assets do projeto
+                      'assets/images/logoNormal.png', // Caminho da imagem da logo nos assets
                       height:
-                          150, // Define a altura da imagem para que ocupe todo o espaço disponível
+                          150, // Define a altura da imagem da logo
                       width:
-                          150, // Define a largura da imagem para que fique proporcional, garantindo um círculo perfeito
+                          150, // Define a largura da imagem para manter a proporção circular
                       fit: BoxFit
-                          .cover, // Ajusta a imagem para cobrir o espaço sem distorção
+                          .cover, // Ajusta a imagem para cobrir todo o espaço sem distorção
                     ),
                   ),
                 ),
@@ -52,9 +52,9 @@ class LoginScreen extends StatelessWidget {
               const TextField(
                 decoration: InputDecoration(
                   labelText:
-                      'E-MAIL', // Texto informativo para o campo de entrada
+                      'E-MAIL', // Rótulo que indica que o campo é para o e-mail
                   border:
-                      OutlineInputBorder(), // Define uma borda ao redor do campo de entrada
+                      OutlineInputBorder(), // Adiciona uma borda ao redor do campo
                   filled: true, // Preenche o fundo do campo
                   fillColor: Colors
                       .white, // Define a cor de fundo do campo como branco
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
               ),
               const SizedBox(
                   height:
-                      20), // Espaçamento entre o campo de e-mail e o próximo campo
+                      20), // Espaçamento entre o campo de e-mail e o campo de senha
 
               // Campo de entrada para a senha do usuário
               const TextField(
@@ -70,9 +70,9 @@ class LoginScreen extends StatelessWidget {
                     true, // Oculta o texto digitado para proteger a senha
                 decoration: InputDecoration(
                   labelText:
-                      'PASSWORD', // Texto informativo para o campo de entrada
+                      'PASSWORD', // Rótulo que indica que o campo é para a senha
                   border:
-                      OutlineInputBorder(), // Define uma borda ao redor do campo de entrada
+                      OutlineInputBorder(), // Adiciona uma borda ao redor do campo
                   filled: true, // Preenche o fundo do campo
                   fillColor: Colors
                       .white, // Define a cor de fundo do campo como branco
@@ -82,35 +82,34 @@ class LoginScreen extends StatelessWidget {
                   height:
                       20), // Espaçamento entre o campo de senha e o botão de login
 
-              // Botão de login para enviar as informações
+              // Botão de login para enviar as informações de autenticação
               SizedBox(
-                width:
-                    250, // Define a largura do botão de login, deixando ele um pouco menor
+                width: 250, // Largura do botão de login
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                HomeScreen())); // Navega para a tela principal do aplicativo quando o botão é pressionado
+                                const HomeScreen())); // Navega para a tela principal ao pressionar o botão
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor:
-                        Colors.blue, // Define a cor do fundo do botão como azul
+                        Colors.blue, // Define a cor de fundo do botão como azul
                     padding: const EdgeInsets.symmetric(
                         vertical:
-                            12.0), // Ajusta o espaçamento interno do botão, aumentando a altura do botão
+                            12.0), // Ajusta o espaçamento interno para dar mais altura ao botão
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
-                          8), // Define as bordas do botão arredondadas
+                          8), // Define as bordas do botão como arredondadas
                     ),
                   ),
                   child: const Text(
-                    'ENTRAR', // Texto que aparece no botão
+                    'ENTRAR', // Texto do botão de login
                     style: TextStyle(
                       fontSize: 16, // Tamanho da fonte do texto no botão
                       color: Colors
-                          .black, // Cor do texto no botão definida como preto
+                          .black, // Cor do texto do botão definida como preto
                     ),
                   ),
                 ),
@@ -119,58 +118,58 @@ class LoginScreen extends StatelessWidget {
                   height:
                       20), // Espaçamento entre o botão de login e o link "Esqueci a senha"
 
-              // Botão de texto para "Esqueci a senha"
+              // Link para recuperação de senha
               TextButton(
                 onPressed: () {
-                  // Ação para "Esqueci a senha" - pode ser adicionar lógica de recuperação de senha posteriormente
+                  // Ação para recuperação de senha, pode ser adicionada posteriormente
                 },
                 child: const Text(
-                  'Esqueci a senha', // Texto que aparece no botão
+                  'Esqueci a senha', // Texto do botão de recuperação de senha
                   style: TextStyle(
                       color: Colors
-                          .black54), // Define a cor do texto como um tom de cinza claro
+                          .black54), // Cor do texto em um tom de cinza claro
                 ),
               ),
               const SizedBox(
                   height:
-                      10), // Espaçamento entre o link "Esqueci a senha" e o texto informativo
+                      10), // Espaçamento entre o link "Esqueci a senha" e o texto de criar conta
 
-              // Texto informativo sobre criação de conta
+              // Texto informativo sobre a criação de uma conta
               const Text(
-                  "Não tem uma conta no APP? É GRÁTIS"), // Texto simples informando sobre a criação gratuita de uma conta
+                  "Não tem uma conta no APP? É GRÁTIS"), // Texto informando que a conta pode ser criada gratuitamente
 
               const SizedBox(
                   height:
                       10), // Espaçamento entre o texto informativo e o botão de criar conta
 
-              // Botão "Crie sua conta aqui" para redirecionar para a tela de cadastro
+              // Botão para redirecionar o usuário para a tela de criação de conta
               SizedBox(
-                width: 250, // Define a largura do botão de criar conta
+                width: 250, // Largura do botão de criar conta
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                CadastroScreen())); // Navega para a tela de cadastro quando o botão é pressionado
+                                const CadastroScreen())); // Navega para a tela de cadastro ao pressionar o botão
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors
                         .orange, // Define a cor do fundo do botão como laranja
                     padding: const EdgeInsets.symmetric(
                         vertical:
-                            12.0), // Ajusta o espaçamento interno do botão, aumentando a altura do botão
+                            12.0), // Ajusta o espaçamento interno para aumentar a altura do botão
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
-                          8), // Define as bordas do botão arredondadas
+                          8), // Define as bordas do botão como arredondadas
                     ),
                   ),
                   child: const Text(
-                    'Crie sua conta aqui', // Texto que aparece no botão
+                    'Crie sua conta aqui', // Texto exibido no botão de criar conta
                     style: TextStyle(
                       fontSize: 16, // Tamanho da fonte do texto no botão
                       color: Colors
-                          .black, // Cor do texto no botão definida como preto
+                          .black, // Cor do texto do botão definida como preto
                     ),
                   ),
                 ),

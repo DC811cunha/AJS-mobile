@@ -1,107 +1,95 @@
-import 'package:ajs/home_screen.dart';
-import 'package:ajs/login_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
+import 'package:ajs/login_screen.dart'; // Importa a tela de login
+import 'package:flutter/material.dart'; // Importa o pacote Flutter para construção de interfaces
 
-// Classe principal da tela Quem Somos, usando StatelessWidget, pois não há estado dinâmico na tela
+// Classe principal da tela "Quem Somos", usando StatelessWidget, pois a tela não possui estado dinâmico
 class SomosScreen extends StatelessWidget {
   const SomosScreen({Key? key}) : super(key: key);
 
-  // Método build é responsável pela construção da interface da tela
+  // Método build é responsável por construir a interface da tela "Quem Somos"
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AJS Skate', // Define o título do aplicativo
-      debugShowCheckedModeBanner: false, // Remove o banner de depuração da tela
+      title: 'AJS Skate', // Define o título da aplicação
+      debugShowCheckedModeBanner: false, // Remove o banner de depuração
       theme: ThemeData(
-        primarySwatch: Colors
-            .grey, // Define o tema principal do aplicativo com uma paleta de cinza
+        primarySwatch: Colors.grey, // Define uma paleta de cores em tons de cinza
       ),
-      home:
-          SkateScreen(), // Define a tela inicial do aplicativo como SkateScreen
+      home: SkateScreen(), // Define a tela inicial do aplicativo como SkateScreen
     );
   }
 }
 
+// Classe que constrói a tela de detalhes sobre o skate
 class SkateScreen extends StatelessWidget {
-  // Método build é responsável pela construção da interface da tela Skate
+  // Método build é responsável por construir a interface da tela Skate
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Scaffold define a estrutura básica da tela com AppBar, corpo (body), etc.
+      // Scaffold fornece a estrutura básica da tela, incluindo AppBar e corpo
       appBar: AppBar(
-        backgroundColor: Colors.grey[
-            300], // Define a cor de fundo da AppBar como um tom claro de cinza
+        backgroundColor: Colors.grey[300], // Cor de fundo da AppBar em cinza claro
         elevation: 0, // Remove a sombra padrão da AppBar
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors
-                  .black), // Define um ícone de seta para a esquerda (voltar) na cor preta
+          icon: Icon(Icons.arrow_back, color: Colors.black), // Ícone de voltar na cor preta
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      HomeScreen()), //-----Alteracao Funcionando redirecionamento-----Redireciona para página Home
-            ); // Ao pressionar o botão, navega para a página principal (rota '/home')
+                      const HomeScreen()), // Redireciona para a tela Home ao pressionar o botão voltar
+            );
           },
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person,
-                color: Colors.black), // Ícone de perfil na cor preta
+            icon: const Icon(Icons.person, color: Colors.black), // Ícone de perfil na cor preta
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          LoginScreen())); // Navega para a página de login ao pressionar o botão de perfil
+                          const LoginScreen())); // Redireciona para a tela de login ao pressionar o ícone de perfil
             },
           ),
         ],
       ),
-      // O corpo principal da tela
+      // Corpo principal da tela
       body: SingleChildScrollView(
-        // SingleChildScrollView permite que o conteúdo seja rolado caso exceda o espaço da tela
+        // Permite rolar o conteúdo se ele for maior que o espaço disponível
         child: Padding(
-          padding: const EdgeInsets.all(
-              16.0), // Define o espaçamento de 16 pixels ao redor do conteúdo da tela
+          padding: const EdgeInsets.all(16.0), // Define um espaçamento de 16 pixels ao redor do conteúdo
           child: Column(
-            // Column organiza os widgets em uma coluna, um em cima do outro
+            // Organiza os widgets verticalmente
             children: [
-              // Exibição da logo circular centralizada
+              // Exibe a logo circular centralizada
               Center(
                 child: ClipOval(
-                  // ClipOval transforma o widget filho (imagem) em uma forma oval (circular, se altura = largura)
+                  // Deixa a imagem em formato oval (circular)
                   child: Image.asset(
-                    'assets/images/logoNormal.png', // Caminho para a imagem da logo dentro dos assets do projeto
-                    height: 200, // Define a altura da imagem como 200 pixels
-                    width:
-                        200, // Define a largura da imagem como 200 pixels (forma circular)
-                    fit: BoxFit
-                        .cover, // Ajusta a imagem para cobrir o espaço, mantendo suas proporções
+                    'assets/images/logoNormal.png', // Caminho para a imagem da logo nos assets
+                    height: 200, // Define a altura da imagem
+                    width: 200, // Define a largura da imagem (mantém a proporção circular)
+                    fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço sem distorção
                   ),
                 ),
               ),
-              const SizedBox(
-                  height:
-                      20), // Adiciona um espaçamento vertical de 20 pixels entre a imagem e o próximo widget
+              const SizedBox(height: 20), // Espaçamento entre a logo e o próximo widget
 
               // Texto descritivo sobre o skate
               const Text(
-                'O skate é mais do que um simples esporte é uma forma de vida. Com sua fusão de arte, '
+                'O skate é mais do que um simples esporte, é uma forma de vida. Com sua fusão de arte, '
                 'adrenalina e comunidade, ele transcende o asfalto para se tornar uma expressão de liberdade sobre rodas. '
                 'Cada manobra é uma dança entre o corpo e a prancha, uma busca incessante pela superação dos próprios limites.\n\n'
                 'Nas ruas da cidade ou nas pistas dos parques, o skate é uma paixão que une pessoas de todas as idades e origens. '
                 'É um espaço onde a criatividade floresce e as barreiras desaparecem. Aqui, skatistas novatos aprendem com os mais '
                 'experientes, compartilhando dicas e truques enquanto se ajudam mutuamente a evoluir.',
                 style: TextStyle(
-                  fontSize: 16, // Define o tamanho da fonte como 16 pixels
-                  height:
-                      1.5, // Define a altura da linha do texto (espaçamento entre linhas) como 1.5 vezes o tamanho da fonte
-                  color: Colors.black, // Define a cor do texto como preta
+                  fontSize: 16, // Tamanho da fonte
+                  height: 1.5, // Altura da linha (espaçamento entre as linhas)
+                  color: Colors.black, // Cor do texto
                 ),
-                textAlign: TextAlign
-                    .center, // Centraliza o texto horizontalmente na tela
+                textAlign: TextAlign.center, // Centraliza o texto horizontalmente
               ),
             ],
           ),
