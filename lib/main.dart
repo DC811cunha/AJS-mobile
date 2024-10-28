@@ -25,10 +25,14 @@ class MyApp extends StatelessWidget {
 
       // Define as rotas que podem ser navegadas no aplicativo
       routes: {
-        '/': (context) => const LoginScreen(), // Rota inicial que leva para a tela de login
-        '/signup': (context) => const CadastroScreen(), // Rota para a tela de cadastro
-        '/home': (context) => const HomeScreen(), // Rota para a tela principal (Home)
-        '/somos': (context) => const SomosScreen(), // Rota para a tela Quem somos
+        '/': (context) =>
+            const LoginScreen(), // Rota inicial que leva para a tela de login
+        '/signup': (context) =>
+            const CadastroScreen(), // Rota para a tela de cadastro
+        '/home': (context) =>
+            const HomeScreen(), // Rota para a tela principal (Home)
+        '/somos': (context) =>
+            const SomosScreen(), // Rota para a tela Quem somos
       },
     );
   }
