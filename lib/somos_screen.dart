@@ -13,9 +13,11 @@ class SomosScreen extends StatelessWidget {
       title: 'AJS Skate', // Define o título da aplicação
       debugShowCheckedModeBanner: false, // Remove o banner de depuração
       theme: ThemeData(
-        primarySwatch: Colors.grey, // Define uma paleta de cores em tons de cinza
+        primarySwatch:
+            Colors.grey, // Define uma paleta de cores em tons de cinza
       ),
-      home: SkateScreen(), // Define a tela inicial do aplicativo como SkateScreen
+      home:
+          SkateScreen(), // Define a tela inicial do aplicativo como SkateScreen
     );
   }
 }
@@ -28,10 +30,12 @@ class SkateScreen extends StatelessWidget {
     return Scaffold(
       // Scaffold fornece a estrutura básica da tela, incluindo AppBar e corpo
       appBar: AppBar(
-        backgroundColor: Colors.grey[300], // Cor de fundo da AppBar em cinza claro
+        backgroundColor:
+            Colors.grey[300], // Cor de fundo da AppBar em cinza claro
         elevation: 0, // Remove a sombra padrão da AppBar
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.black), // Ícone de voltar na cor preta
+          icon: Icon(Icons.arrow_back,
+              color: Colors.black), // Ícone de voltar na cor preta
           onPressed: () {
             Navigator.push(
               context,
@@ -43,7 +47,8 @@ class SkateScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.person, color: Colors.black), // Ícone de perfil na cor preta
+            icon: const Icon(Icons.person,
+                color: Colors.black), // Ícone de perfil na cor preta
             onPressed: () {
               Navigator.push(
                   context,
@@ -58,7 +63,8 @@ class SkateScreen extends StatelessWidget {
       body: SingleChildScrollView(
         // Permite rolar o conteúdo se ele for maior que o espaço disponível
         child: Padding(
-          padding: const EdgeInsets.all(16.0), // Define um espaçamento de 16 pixels ao redor do conteúdo
+          padding: const EdgeInsets.all(
+              16.0), // Define um espaçamento de 16 pixels ao redor do conteúdo
           child: Column(
             // Organiza os widgets verticalmente
             children: [
@@ -69,12 +75,15 @@ class SkateScreen extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/logoNormal.png', // Caminho para a imagem da logo nos assets
                     height: 200, // Define a altura da imagem
-                    width: 200, // Define a largura da imagem (mantém a proporção circular)
-                    fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço sem distorção
+                    width:
+                        200, // Define a largura da imagem (mantém a proporção circular)
+                    fit: BoxFit
+                        .cover, // Ajusta a imagem para cobrir o espaço sem distorção
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Espaçamento entre a logo e o próximo widget
+              const SizedBox(
+                  height: 20), // Espaçamento entre a logo e o próximo widget
 
               // Texto descritivo sobre o skate
               const Text(
@@ -89,7 +98,8 @@ class SkateScreen extends StatelessWidget {
                   height: 1.5, // Altura da linha (espaçamento entre as linhas)
                   color: Colors.black, // Cor do texto
                 ),
-                textAlign: TextAlign.center, // Centraliza o texto horizontalmente
+                textAlign:
+                    TextAlign.center, // Centraliza o texto horizontalmente
               ),
             ],
           ),

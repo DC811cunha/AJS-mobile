@@ -21,7 +21,8 @@ class HomeScreen extends StatelessWidget {
         const SnackBar(
           content: Text(
               'Não foi possível abrir o link do Instagram. Verifique se há um navegador disponível.'),
-          duration: Duration(seconds: 3), // O Snackbar desaparece após 3 segundos
+          duration:
+              Duration(seconds: 3), // O Snackbar desaparece após 3 segundos
         ),
       );
     }
@@ -98,14 +99,16 @@ class HomeScreen extends StatelessWidget {
                           'assets/images/logoNormal.png'), // Caminho para a logo
                     ),
                     const SizedBox(
-                        width: 16), // Espaçamento entre a logo e o texto (comentado)
+                        width:
+                            16), // Espaçamento entre a logo e o texto (comentado)
                   ],
                 ),
               ),
               // Item de menu "Quem somos"
               ListTile(
                 leading: const Icon(Icons.info,
-                    color: Color.fromARGB(172, 189, 189, 189)), // Ícone na cor cinza
+                    color: Color.fromARGB(
+                        172, 189, 189, 189)), // Ícone na cor cinza
                 title: const Text(
                   'Quem somos', // Texto do item do menu
                   style: TextStyle(
@@ -122,7 +125,8 @@ class HomeScreen extends StatelessWidget {
               // Item de menu para acessar o Instagram
               ListTile(
                 leading: const Icon(Icons.camera,
-                    color: Color.fromARGB(172, 189, 189, 189)), // Ícone na cor cinza
+                    color: Color.fromARGB(
+                        172, 189, 189, 189)), // Ícone na cor cinza
                 title: const Text(
                   'Instagram', // Texto do item do menu
                   style: TextStyle(
@@ -137,7 +141,8 @@ class HomeScreen extends StatelessWidget {
               // Item de menu para acessar a página de login
               ListTile(
                 leading: const Icon(Icons.login,
-                    color: Color.fromARGB(172, 189, 189, 189)), // Ícone na cor cinza
+                    color: Color.fromARGB(
+                        172, 189, 189, 189)), // Ícone na cor cinza
                 title: const Text(
                   'Login', // Texto do item do menu
                   style: TextStyle(
@@ -161,21 +166,30 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 20), // Espaçamento no topo
           Padding(
             padding: const EdgeInsets.symmetric(
-                horizontal: 16.0), // Espaçamento horizontal para o campo de busca
+                horizontal:
+                    16.0), // Espaçamento horizontal para o campo de busca
             child: const TextField(
               decoration: InputDecoration(
-                border: OutlineInputBorder(), // Adiciona uma borda ao redor do campo de busca
-                labelText: 'Pesquise aqui seu evento', // Rótulo do campo de busca
-                suffixIcon: Icon(Icons.search), // Ícone de busca no lado direito
+                border:
+                    OutlineInputBorder(), // Adiciona uma borda ao redor do campo de busca
+                labelText:
+                    'Pesquise aqui seu evento', // Rótulo do campo de busca
+                suffixIcon:
+                    Icon(Icons.search), // Ícone de busca no lado direito
               ),
             ),
           ),
-          const SizedBox(height: 20), // Espaçamento entre o campo de busca e o próximo conteúdo
+          const SizedBox(
+              height:
+                  20), // Espaçamento entre o campo de busca e o próximo conteúdo
           // Placeholder para exibição da imagem de um evento
           Container(
-            height: 300, // Define a altura do espaço reservado para a imagem do evento
-            width: double.infinity, // A largura ocupa todo o espaço disponível na tela
-            color: Colors.grey[300], // Cor de fundo cinza claro para o placeholder
+            height:
+                300, // Define a altura do espaço reservado para a imagem do evento
+            width: double
+                .infinity, // A largura ocupa todo o espaço disponível na tela
+            color:
+                Colors.grey[300], // Cor de fundo cinza claro para o placeholder
             child: Stack(
               children: [
                 // Imagem de fundo para representar um evento
@@ -183,7 +197,8 @@ class HomeScreen extends StatelessWidget {
                   'assets/images/imageEvento2.png', // Caminho da imagem nos assets
                   width: double.infinity, // Largura da imagem
                   height: 300, // Altura da imagem
-                  fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço sem distorção
+                  fit: BoxFit
+                      .cover, // Ajusta a imagem para cobrir o espaço sem distorção
                 ),
                 // Texto sobre a imagem
                 const Center(

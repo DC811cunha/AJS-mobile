@@ -20,8 +20,7 @@ class LoginScreen extends StatelessWidget {
         child: SingleChildScrollView(
           // Permite rolar o conteúdo, útil quando o teclado é exibido ou a tela é pequena
           padding: const EdgeInsets.symmetric(
-              horizontal:
-                  24.0), // Define o espaçamento horizontal nas laterais
+              horizontal: 24.0), // Define o espaçamento horizontal nas laterais
           child: Column(
             mainAxisAlignment: MainAxisAlignment
                 .center, // Alinha os itens verticalmente ao centro
@@ -35,8 +34,7 @@ class LoginScreen extends StatelessWidget {
                     // Garante que a imagem da logo seja exibida de forma circular
                     child: Image.asset(
                       'assets/images/logoNormal.png', // Caminho da imagem da logo nos assets
-                      height:
-                          150, // Define a altura da imagem da logo
+                      height: 150, // Define a altura da imagem da logo
                       width:
                           150, // Define a largura da imagem para manter a proporção circular
                       fit: BoxFit

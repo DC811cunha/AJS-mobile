@@ -19,15 +19,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       // MaterialApp é o widget raiz do aplicativo, responsável pela navegação e temas
-      debugShowCheckedModeBanner: false, // Remove o banner de debug no canto superior direito
+      debugShowCheckedModeBanner:
+          false, // Remove o banner de debug no canto superior direito
       initialRoute: '/', // Define a rota inicial como a tela de login ('/')
 
       // Mapa de rotas navegáveis dentro do aplicativo
       routes: {
-        '/': (context) => const LoginScreen(), // Rota inicial que leva para a tela de login
-        '/signup': (context) => const CadastroScreen(), // Rota para a tela de cadastro
-        '/home': (context) => const HomeScreen(), // Rota para a tela principal (Home)
-        '/somos': (context) => const SomosScreen(), // Rota para a tela "Quem Somos"
+        '/': (context) =>
+            const LoginScreen(), // Rota inicial que leva para a tela de login
+        '/signup': (context) =>
+            const CadastroScreen(), // Rota para a tela de cadastro
+        '/home': (context) =>
+            const HomeScreen(), // Rota para a tela principal (Home)
+        '/somos': (context) =>
+            const SomosScreen(), // Rota para a tela "Quem Somos"
       },
     );
   }

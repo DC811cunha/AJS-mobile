@@ -54,11 +54,13 @@ class CadastroScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                  height: 20), // Espaçamento entre o campo de nome e o próximo campo
+                  height:
+                      20), // Espaçamento entre o campo de nome e o próximo campo
 
               // Campo de entrada para o e-mail
               const TextField(
-                keyboardType: TextInputType.emailAddress, // Define o teclado adequado para entrada de e-mail
+                keyboardType: TextInputType
+                    .emailAddress, // Define o teclado adequado para entrada de e-mail
                 decoration: InputDecoration(
                   labelText: 'E-MAIL', // Rótulo para o campo de e-mail
                   border:
@@ -68,7 +70,8 @@ class CadastroScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                  height: 20), // Espaçamento entre o campo de e-mail e o próximo campo
+                  height:
+                      20), // Espaçamento entre o campo de e-mail e o próximo campo
 
               // Campo de entrada para a senha
               const TextField(
@@ -82,7 +85,8 @@ class CadastroScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                  height: 20), // Espaçamento entre o campo de senha e o próximo campo
+                  height:
+                      20), // Espaçamento entre o campo de senha e o próximo campo
 
               // Campo de entrada para confirmar a senha
               const TextField(
@@ -97,7 +101,8 @@ class CadastroScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                  height: 20), // Espaçamento entre o campo de confirmação de senha e o botão de cadastro
+                  height:
+                      20), // Espaçamento entre o campo de confirmação de senha e o botão de cadastro
 
               // Botão de cadastrar
               SizedBox(
@@ -114,7 +119,8 @@ class CadastroScreen extends StatelessWidget {
                     backgroundColor:
                         Colors.blue, // Define a cor do botão como azul
                     padding: const EdgeInsets.symmetric(
-                        vertical: 12.0), // Define o padding vertical para ajustar a altura do botão
+                        vertical:
+                            12.0), // Define o padding vertical para ajustar a altura do botão
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
                           8), // Define bordas arredondadas para o botão
@@ -123,13 +129,15 @@ class CadastroScreen extends StatelessWidget {
                   child: const Text(
                     'CADASTRAR', // Texto que aparece no botão
                     style: TextStyle(
-                      fontSize: 16, // Define o tamanho da fonte do texto no botão
+                      fontSize:
+                          16, // Define o tamanho da fonte do texto no botão
                       color: Colors.black, // Define a cor do texto como preto
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Espaçamento após o botão de cadastro
+              const SizedBox(
+                  height: 20), // Espaçamento após o botão de cadastro
             ],
           ),
         ),
