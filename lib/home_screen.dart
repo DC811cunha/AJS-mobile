@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:ajs/login_screen.dart'; // Importa a tela de login
 import 'package:ajs/somos_screen.dart'; // Importa a tela "Quem somos"
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
@@ -5,11 +6,16 @@ import 'package:url_launcher/url_launcher.dart'; // Importa funções para abrir
 import 'package:supabase_flutter/supabase_flutter.dart'; // Supabase para autenticação
 
 // Classe principal da tela Home, utilizando StatelessWidget porque não há estado dinâmico
+=======
+import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  // Função assíncrona para abrir o link do Instagram no navegador
   Future<void> _abrirInstagram(BuildContext context) async {
+<<<<<<< HEAD
     const String url =
         'https://www.instagram.com/ajoinvilleskate?igsh=MW1kNTFmb2xlcGtteQ=='; // URL do Instagram
 
@@ -69,6 +75,18 @@ class HomeScreen extends StatelessWidget {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
+=======
+    const url = 'https://www.instagram.com/ajoinvilleskate';
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Não foi possível abrir o link do Instagram. Verifique se há um navegador disponível.'),
+          duration: Duration(seconds: 3),
+        ),
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
       );
     }
   }
@@ -76,6 +94,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       // Define a estrutura principal da tela
       appBar: AppBar(
         backgroundColor: Colors.grey[200], // Cor de fundo do AppBar
@@ -98,10 +117,26 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.person,
                 color: Colors.black), // Ícone de perfil em preto
             onPressed: () => _onProfileIconPressed(context), // Validação e navegação condicional
+=======
+      appBar: AppBar(
+        backgroundColor: Colors.grey[200],
+        elevation: 0,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu, color: Colors.black),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
+        ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person, color: Colors.black),
+            onPressed: () => Navigator.pushNamed(context, '/'),
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
           ),
         ],
       ),
       drawer: Drawer(
+<<<<<<< HEAD
         // Define o menu lateral da tela
         child: Container(
           decoration: BoxDecoration(
@@ -210,8 +245,82 @@ class HomeScreen extends StatelessWidget {
                   color: Colors.black,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+=======
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Colors.grey[800]!, Colors.grey[500]!],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
               ),
+              child: const CircleAvatar(
+                radius: 30,
+                backgroundImage: AssetImage('assets/images/logoNormal.png'),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.info, color: Colors.black54),
+              title: const Text('Quem somos'),
+              onTap: () => Navigator.pushNamed(context, '/somos'),
+            ),
+            ListTile(
+              leading: const Icon(Icons.camera, color: Colors.black54),
+              title: const Text('Instagram'),
+              onTap: () {
+                Navigator.of(context).pop();
+                _abrirInstagram(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.login, color: Colors.black54),
+              title: const Text('Login'),
+              onTap: () => Navigator.pushNamed(context, '/'),
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Pesquise aqui seu evento',
+                suffixIcon: Icon(Icons.search),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Container(
+            height: 300,
+            width: double.infinity,
+            color: Colors.grey[300],
+            child: Stack(
+              children: [
+                Image.asset(
+                  'assets/images/imageEvento2.png',
+                  width: double.infinity,
+                  height: 300,
+                  fit: BoxFit.cover,
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
+                ),
+                const Center(
+                  child: Text(
+                    'Imagem do Evento',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
