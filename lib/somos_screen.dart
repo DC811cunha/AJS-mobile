@@ -1,90 +1,122 @@
-import 'package:ajs/home_screen.dart';
-import 'package:ajs/login_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
+import 'package:ajs/login_screen.dart'; // Importa a tela de login
+import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
+import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o Supabase para autenticação
 
-// Classe principal da tela Quem Somos, usando StatelessWidget, pois não há estado dinâmico na tela
+// Classe principal da tela "Quem Somos", usando StatelessWidget porque não há estado dinâmico
 class SomosScreen extends StatelessWidget {
   const SomosScreen({Key? key}) : super(key: key);
 
-  // Método build é responsável pela construção da interface da tela
+  // Método para redirecionar condicionalmente com base no estado do usuário
+  void _onProfileIconPressed(BuildContext context) {
+    final user = Supabase.instance.client.auth.currentUser; // Verifica o usuário atual
+
+    if (user != null) {
+      // Se o usuário estiver autenticado, redireciona para a HomeScreen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+    } else {
+      // Caso contrário, redireciona para a LoginScreen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'AJS Skate', // Define o título do aplicativo
-      debugShowCheckedModeBanner: false, // Remove o banner de depuração da tela
+      debugShowCheckedModeBanner: false, // Remove o banner de depuração do canto superior direito
       theme: ThemeData(
-        primarySwatch: Colors
-            .grey, // Define o tema principal do aplicativo com uma paleta de cinza
+        primarySwatch: Colors.grey, // Define o tema principal com uma paleta de cinza
       ),
-      home:
-          SkateScreen(), // Define a tela inicial do aplicativo como SkateScreen
+      home: SkateScreen(), // Define SkateScreen como a tela inicial
     );
   }
 }
 
+// Tela principal da página Skate
 class SkateScreen extends StatelessWidget {
-  // Método build é responsável pela construção da interface da tela Skate
+  // Método para redirecionar condicionalmente com base no estado do usuário
+  void _onProfileIconPressed(BuildContext context) {
+    final user = Supabase.instance.client.auth.currentUser; // Verifica o usuário atual
+
+    if (user != null) {
+      // Se o usuário estiver autenticado, redireciona para a HomeScreen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+    } else {
+      // Caso contrário, redireciona para a LoginScreen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Scaffold define a estrutura básica da tela com AppBar, corpo (body), etc.
+      // Scaffold fornece a estrutura básica da tela
       appBar: AppBar(
-        backgroundColor: Colors.grey[
-            300], // Define a cor de fundo da AppBar como um tom claro de cinza
+        backgroundColor: Colors.grey[300], // Define a cor de fundo da AppBar como cinza claro
         elevation: 0, // Remove a sombra padrão da AppBar
         leading: IconButton(
-          icon: Icon(Icons.arrow_back,
-              color: Colors
-                  .black), // Define um ícone de seta para a esquerda (voltar) na cor preta
+          icon: const Icon(Icons.arrow_back,
+              color: Colors.black), // Ícone de seta para voltar na cor preta
           onPressed: () {
+            // Ação ao pressionar o botão
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) =>
-                      HomeScreen()), //-----Alteracao Funcionando redirecionamento-----Redireciona para página Home
-            ); // Ao pressionar o botão, navega para a página principal (rota '/home')
+                builder: (context) => const HomeScreen(), // Redireciona para a tela principal (HomeScreen)
+              ),
+            );
           },
         ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person,
                 color: Colors.black), // Ícone de perfil na cor preta
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginScreen())); // Navega para a página de login ao pressionar o botão de perfil
-            },
+            onPressed: () => _onProfileIconPressed(context), // Navegação condicional com base no usuário
           ),
         ],
       ),
-      // O corpo principal da tela
+      // Corpo principal da tela
       body: SingleChildScrollView(
-        // SingleChildScrollView permite que o conteúdo seja rolado caso exceda o espaço da tela
+        // Permite rolar o conteúdo caso exceda o espaço disponível na tela
         child: Padding(
-          padding: const EdgeInsets.all(
-              16.0), // Define o espaçamento de 16 pixels ao redor do conteúdo da tela
+          padding: const EdgeInsets.all(16.0), // Define espaçamento ao redor do conteúdo
           child: Column(
-            // Column organiza os widgets em uma coluna, um em cima do outro
+            // Organiza os widgets verticalmente
             children: [
-              // Exibição da logo circular centralizada
+              // Exibição da logo
               Center(
                 child: ClipOval(
-                  // ClipOval transforma o widget filho (imagem) em uma forma oval (circular, se altura = largura)
+                  // Torna a imagem circular
                   child: Image.asset(
-                    'assets/images/logoNormal.png', // Caminho para a imagem da logo dentro dos assets do projeto
-                    height: 200, // Define a altura da imagem como 200 pixels
-                    width:
-                        200, // Define a largura da imagem como 200 pixels (forma circular)
-                    fit: BoxFit
-                        .cover, // Ajusta a imagem para cobrir o espaço, mantendo suas proporções
+                    'assets/images/logoNormal.png', // Caminho para a imagem
+                    height: 200, // Define altura da imagem
+                    width: 200, // Define largura da imagem
+                    fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço disponível
                   ),
                 ),
               ),
-              const SizedBox(
-                  height:
-                      20), // Adiciona um espaçamento vertical de 20 pixels entre a imagem e o próximo widget
+              const SizedBox(height: 20), // Adiciona espaçamento vertical
 
               // Texto descritivo sobre o skate
               const Text(
@@ -95,13 +127,11 @@ class SkateScreen extends StatelessWidget {
                 'É um espaço onde a criatividade floresce e as barreiras desaparecem. Aqui, skatistas novatos aprendem com os mais '
                 'experientes, compartilhando dicas e truques enquanto se ajudam mutuamente a evoluir.',
                 style: TextStyle(
-                  fontSize: 16, // Define o tamanho da fonte como 16 pixels
-                  height:
-                      1.5, // Define a altura da linha do texto (espaçamento entre linhas) como 1.5 vezes o tamanho da fonte
-                  color: Colors.black, // Define a cor do texto como preta
+                  fontSize: 16, // Tamanho do texto
+                  height: 1.5, // Altura da linha (espaçamento entre linhas)
+                  color: Colors.black, // Cor do texto
                 ),
-                textAlign: TextAlign
-                    .center, // Centraliza o texto horizontalmente na tela
+                textAlign: TextAlign.center, // Centraliza o texto horizontalmente
               ),
             ],
           ),

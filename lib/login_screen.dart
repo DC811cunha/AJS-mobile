@@ -1,176 +1,202 @@
-import 'package:flutter/material.dart';
-import 'package:ajs/home_screen.dart';
-import 'package:ajs/signup_screen.dart';
+import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
+import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o cliente Supabase para autenticação
+import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
+import 'package:ajs/signup_screen.dart'; // Importa a tela de cadastro (Sign-up)
 
-// Classe principal da tela de login, utilizando StatelessWidget pois o conteúdo não muda durante a execução
-class LoginScreen extends StatelessWidget {
+// Classe principal da tela de login, utilizando StatefulWidget porque há estado dinâmico
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  // Método build é responsável pela construção da interface da tela
+  @override
+  State<LoginScreen> createState() => _LoginScreenState(); // Cria o estado da tela de login
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // Controladores de texto para capturar entrada de email e senha
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  // Função assíncrona para realizar o login
+  Future<void> _login() async {
+    final email = _emailController.text.trim(); // Obtém o email do campo de entrada
+    final password = _passwordController.text.trim(); // Obtém a senha do campo de entrada
+
+    // Verifica se os campos estão preenchidos
+    if (email.isEmpty || password.isEmpty) {
+      _showErrorDialog('Por favor, preencha todos os campos.'); // Mostra mensagem de erro
+      return;
+    }
+
+    // Exibe um indicador de carregamento durante o login
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Impede que o usuário feche o diálogo clicando fora dele
+      builder: (context) => const Center(child: CircularProgressIndicator()), // Mostra indicador de progresso
+    );
+
+    try {
+      // Realiza a tentativa de login usando Supabase
+      final response = await Supabase.instance.client.auth.signInWithPassword(
+        email: email,
+        password: password,
+      );
+
+      // Fecha o indicador de carregamento
+      Navigator.of(context).pop();
+
+      // Verifica se o login foi bem-sucedido
+      if (response.user != null) {
+        // Redireciona para a tela principal (HomeScreen) em caso de sucesso
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      } else {
+        // Mostra mensagem de erro em caso de falha desconhecida
+        _showErrorDialog('Erro desconhecido ao fazer login.');
+      }
+    } catch (e) {
+      // Fecha o indicador de carregamento em caso de erro
+      Navigator.of(context).pop();
+      // Mostra mensagem de erro detalhada
+      _showErrorDialog('Ocorreu um erro: ${e is AuthException ? e.message : e.toString()}');
+    }
+  }
+
+  // Função para exibir mensagens de erro em um AlertDialog
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Erro de login'), // Título do diálogo
+        content: Text(message), // Mensagem de erro
+        actions: [
+          // Botão de OK para fechar o diálogo
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Fecha o diálogo
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Define o Scaffold, que é a estrutura básica de uma tela em Flutter
-      backgroundColor: const Color.fromARGB(172, 189, 189,
-          189), // Cor de fundo do Scaffold, usando um tom de cinza claro com opacidade
-
-      // Corpo principal da tela
+      backgroundColor: const Color.fromARGB(172, 189, 189, 189), // Cor de fundo da tela
       body: Center(
-        // Centra o conteúdo principal da tela
         child: SingleChildScrollView(
-          // Permite rolar o conteúdo se o teclado aparecer ou se não houver espaço suficiente
-          padding: const EdgeInsets.symmetric(
-              horizontal:
-                  24.0), // Define o espaçamento horizontal para as margens
+          padding: const EdgeInsets.symmetric(horizontal: 24.0), // Define espaçamento lateral
           child: Column(
-            mainAxisAlignment: MainAxisAlignment
-                .center, // Alinha o conteúdo da coluna ao centro verticalmente
+            mainAxisAlignment: MainAxisAlignment.center, // Centraliza o conteúdo verticalmente
             children: [
-              // Espaço reservado para a logo redonda do aplicativo
+              // Exibição da logo do aplicativo
               SizedBox(
-                height: 150, // Define a altura do espaço reservado para a logo
+                height: 150,
                 child: Center(
-                  // Centraliza a logo dentro do espaço definido
                   child: ClipOval(
-                    // Faz com que a imagem tenha um formato oval
                     child: Image.asset(
-                      'assets/images/logoNormal.png', // Caminho para a imagem da logo dentro dos assets do projeto
-                      height:
-                          150, // Define a altura da imagem para que ocupe todo o espaço disponível
-                      width:
-                          150, // Define a largura da imagem para que fique proporcional, garantindo um círculo perfeito
-                      fit: BoxFit
-                          .cover, // Ajusta a imagem para cobrir o espaço sem distorção
+                      'assets/images/logoNormal.png', // Caminho para a logo
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover, // Ajusta a imagem dentro do espaço definido
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                  height: 40), // Espaçamento entre a logo e o próximo elemento
+              const SizedBox(height: 40), // Espaçamento vertical
 
-              // Campo de entrada para o e-mail do usuário
-              const TextField(
-                decoration: InputDecoration(
-                  labelText:
-                      'E-MAIL', // Texto informativo para o campo de entrada
-                  border:
-                      OutlineInputBorder(), // Define uma borda ao redor do campo de entrada
-                  filled: true, // Preenche o fundo do campo
-                  fillColor: Colors
-                      .white, // Define a cor de fundo do campo como branco
+              // Campo de entrada para email
+              TextField(
+                controller: _emailController, // Controlador para capturar o email
+                decoration: const InputDecoration(
+                  labelText: 'E-MAIL', // Rótulo do campo
+                  border: OutlineInputBorder(), // Borda ao redor do campo
+                  filled: true,
+                  fillColor: Colors.white, // Fundo branco para o campo
                 ),
               ),
-              const SizedBox(
-                  height:
-                      20), // Espaçamento entre o campo de e-mail e o próximo campo
+              const SizedBox(height: 20), // Espaçamento vertical
 
-              // Campo de entrada para a senha do usuário
-              const TextField(
-                obscureText:
-                    true, // Oculta o texto digitado para proteger a senha
-                decoration: InputDecoration(
-                  labelText:
-                      'PASSWORD', // Texto informativo para o campo de entrada
-                  border:
-                      OutlineInputBorder(), // Define uma borda ao redor do campo de entrada
-                  filled: true, // Preenche o fundo do campo
-                  fillColor: Colors
-                      .white, // Define a cor de fundo do campo como branco
+              // Campo de entrada para senha
+              TextField(
+                controller: _passwordController, // Controlador para capturar a senha
+                obscureText: true, // Oculta o texto digitado (modo senha)
+                decoration: const InputDecoration(
+                  labelText: 'PASSWORD', // Rótulo do campo
+                  border: OutlineInputBorder(), // Borda ao redor do campo
+                  filled: true,
+                  fillColor: Colors.white, // Fundo branco para o campo
                 ),
               ),
-              const SizedBox(
-                  height:
-                      20), // Espaçamento entre o campo de senha e o botão de login
+              const SizedBox(height: 20), // Espaçamento vertical
 
-              // Botão de login para enviar as informações
+              // Botão para realizar o login
               SizedBox(
-                width:
-                    250, // Define a largura do botão de login, deixando ele um pouco menor
+                width: 250,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                HomeScreen())); // Navega para a tela principal do aplicativo quando o botão é pressionado
-                  },
+                  onPressed: _login, // Chama a função de login ao pressionar
                   style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        Colors.blue, // Define a cor do fundo do botão como azul
-                    padding: const EdgeInsets.symmetric(
-                        vertical:
-                            12.0), // Ajusta o espaçamento interno do botão, aumentando a altura do botão
+                    backgroundColor: Colors.blue, // Cor do botão
+                    padding: const EdgeInsets.symmetric(vertical: 12.0), // Padding interno
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          8), // Define as bordas do botão arredondadas
+                      borderRadius: BorderRadius.circular(8), // Bordas arredondadas
                     ),
                   ),
                   child: const Text(
-                    'ENTRAR', // Texto que aparece no botão
+                    'ENTRAR', // Texto exibido no botão
                     style: TextStyle(
-                      fontSize: 16, // Tamanho da fonte do texto no botão
-                      color: Colors
-                          .black, // Cor do texto no botão definida como preto
+                      fontSize: 16,
+                      color: Colors.black, // Cor do texto
                     ),
                   ),
                 ),
               ),
-              const SizedBox(
-                  height:
-                      20), // Espaçamento entre o botão de login e o link "Esqueci a senha"
+              const SizedBox(height: 20), // Espaçamento vertical
 
-              // Botão de texto para "Esqueci a senha"
+              // Link para recuperação de senha
               TextButton(
                 onPressed: () {
-                  // Ação para "Esqueci a senha" - pode ser adicionar lógica de recuperação de senha posteriormente
+                  // Implementar lógica de recuperação de senha no futuro
                 },
                 child: const Text(
-                  'Esqueci a senha', // Texto que aparece no botão
-                  style: TextStyle(
-                      color: Colors
-                          .black54), // Define a cor do texto como um tom de cinza claro
+                  'Esqueci a senha', // Texto do botão
+                  style: TextStyle(color: Colors.black54), // Estilo do texto
                 ),
               ),
-              const SizedBox(
-                  height:
-                      10), // Espaçamento entre o link "Esqueci a senha" e o texto informativo
+              const SizedBox(height: 10), // Espaçamento vertical
 
-              // Texto informativo sobre criação de conta
-              const Text(
-                  "Não tem uma conta no APP? É GRÁTIS"), // Texto simples informando sobre a criação gratuita de uma conta
+              // Texto informativo sobre a criação de conta
+              const Text("Não tem uma conta no APP? É GRÁTIS"),
+              const SizedBox(height: 10), // Espaçamento vertical
 
-              const SizedBox(
-                  height:
-                      10), // Espaçamento entre o texto informativo e o botão de criar conta
-
-              // Botão "Crie sua conta aqui" para redirecionar para a tela de cadastro
+              // Botão para redirecionar para a tela de cadastro
               SizedBox(
-                width: 250, // Define a largura do botão de criar conta
+                width: 250,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                CadastroScreen())); // Navega para a tela de cadastro quando o botão é pressionado
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CadastroScreen(), // Redireciona para a tela de cadastro
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors
-                        .orange, // Define a cor do fundo do botão como laranja
-                    padding: const EdgeInsets.symmetric(
-                        vertical:
-                            12.0), // Ajusta o espaçamento interno do botão, aumentando a altura do botão
+                    backgroundColor: Colors.orange, // Cor do botão
+                    padding: const EdgeInsets.symmetric(vertical: 12.0), // Padding interno
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                          8), // Define as bordas do botão arredondadas
+                      borderRadius: BorderRadius.circular(8), // Bordas arredondadas
                     ),
                   ),
                   child: const Text(
-                    'Crie sua conta aqui', // Texto que aparece no botão
+                    'Crie sua conta aqui', // Texto exibido no botão
                     style: TextStyle(
-                      fontSize: 16, // Tamanho da fonte do texto no botão
-                      color: Colors
-                          .black, // Cor do texto no botão definida como preto
+                      fontSize: 16,
+                      color: Colors.black, // Cor do texto
                     ),
                   ),
                 ),
