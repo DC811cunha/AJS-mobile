@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
 import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o pacote Supabase para autenticação e banco de dados
 import 'package:ajs/home_screen.dart'; // Importa a tela Home
@@ -84,6 +88,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
                         width: 150,
                         fit: BoxFit.cover, // Ajusta a imagem dentro de um formato oval
                       ),
+<<<<<<< HEAD
                     ),
                   ),
                 ),
@@ -174,6 +179,187 @@ class _CadastroScreenState extends State<CadastroScreen> {
                 ),
               ],
             ),
+=======
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 40), // Espaçamento vertical
+
+                // Campo de entrada para o nome completo
+                TextFormField(
+                  controller: _nameController, // Controlador para capturar o nome
+                  decoration: const InputDecoration(
+                    labelText: 'NOME COMPLETO', // Rótulo do campo
+                    border: OutlineInputBorder(), // Borda ao redor do campo
+                    filled: true,
+                    fillColor: Colors.white, // Fundo branco para o campo
+                  ),
+                  validator: (value) {
+                    // Validação: verifica se o campo não está vazio
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira seu nome completo.';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20), // Espaçamento vertical
+
+                // Campo de entrada para o e-mail
+                TextFormField(
+                  controller: _emailController, // Controlador para capturar o e-mail
+                  decoration: const InputDecoration(
+                    labelText: 'E-MAIL', // Rótulo do campo
+                    border: OutlineInputBorder(), // Borda ao redor do campo
+                    filled: true,
+                    fillColor: Colors.white, // Fundo branco para o campo
+                  ),
+                  keyboardType: TextInputType.emailAddress, // Define o tipo de teclado como de e-mail
+                  validator: (value) {
+                    // Validação: verifica se o campo não está vazio e se o e-mail é válido
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira seu e-mail.';
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Insira um e-mail válido.';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20), // Espaçamento vertical
+
+                // Campo de entrada para a senha
+                TextFormField(
+                  controller: _passwordController, // Controlador para capturar a senha
+                  obscureText: true, // Oculta o texto digitado (modo senha)
+                  decoration: const InputDecoration(
+                    labelText: 'SENHA', // Rótulo do campo
+                    border: OutlineInputBorder(), // Borda ao redor do campo
+                    filled: true,
+                    fillColor: Colors.white, // Fundo branco para o campo
+                  ),
+                  validator: (value) {
+                    // Validação: verifica se a senha tem pelo menos 6 caracteres
+                    if (value == null || value.length < 6) {
+                      return 'A senha deve ter pelo menos 6 caracteres.';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20), // Espaçamento vertical
+
+                // Botão para realizar o cadastro
+                SizedBox(
+                  width: 250, // Largura do botão
+                  child: ElevatedButton(
+                    onPressed: _signUp, // Chama a função de cadastro ao pressionar o botão
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue, // Cor do botão
+                      padding: const EdgeInsets.symmetric(vertical: 12.0), // Padding interno do botão
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8), // Bordas arredondadas
+                      ),
+                    ),
+                    child: const Text(
+                      'CADASTRAR', // Texto exibido no botão
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black, // Cor do texto
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+=======
+import 'package:flutter/material.dart';
+
+class CadastroScreen extends StatelessWidget {
+  const CadastroScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(172, 189, 189, 189),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 150,
+                child: Center(
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/logoNormal.png',
+                      height: 150,
+                      width: 150,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 40),
+              const TextField(
+                decoration: InputDecoration(
+                  labelText: 'NOME COMPLETO',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const TextField(
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                  labelText: 'E-MAIL',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'SENHA',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const TextField(
+                obscureText: true,
+                decoration: InputDecoration(
+                  labelText: 'CONFIRME SUA SENHA',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: 250,
+                child: ElevatedButton(
+                  onPressed: () => Navigator.pushNamed(context, '/home'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    'CADASTRAR',
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+            ],
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
+>>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
           ),
         ),
       ),

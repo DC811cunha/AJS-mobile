@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
 import 'package:flutter/material.dart'; 
 import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o pacote Supabase para autenticação e banco de dados
 import 'login_screen.dart'; // Importa o arquivo contendo a tela de login
@@ -18,13 +22,28 @@ void main() async {
   );
 
   // Executa o aplicativo
+<<<<<<< HEAD
+=======
+=======
+import 'package:flutter/material.dart';
+import 'login_screen.dart';
+import 'signup_screen.dart';
+import 'home_screen.dart';
+import 'somos_screen.dart';
+
+void main() {
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
+>>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
   runApp(const MyApp());
 }
 
-// Classe principal do aplicativo que herda de StatelessWidget, pois a estrutura principal não tem estado dinâmico
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
   // Método build é responsável por construir a interface do aplicativo
   @override
   Widget build(BuildContext context) {
@@ -38,6 +57,21 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const CadastroScreen(), // Rota para a tela de cadastro
         '/home': (context) => const HomeScreen(), // Rota para a tela principal (Home)
         '/somos': (context) => const SomosScreen(), // Rota para a tela "Quem Somos"
+<<<<<<< HEAD
+=======
+=======
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const LoginScreen(),
+        '/signup': (context) => const CadastroScreen(),
+        '/home': (context) => const HomeScreen(),
+        '/somos': (context) => const SomosScreen(),
+>>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
+>>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
       },
     );
   }
