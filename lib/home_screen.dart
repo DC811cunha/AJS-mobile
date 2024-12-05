@@ -1,41 +1,15 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
 import 'package:ajs/login_screen.dart'; // Importa a tela de login
 import 'package:ajs/somos_screen.dart'; // Importa a tela "Quem somos"
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
 import 'package:url_launcher/url_launcher.dart'; // Importa funções para abrir URLs
 import 'package:supabase_flutter/supabase_flutter.dart'; // Supabase para autenticação
-<<<<<<< HEAD
 
 // Classe principal da tela Home, utilizando StatelessWidget porque não há estado dinâmico
-=======
-<<<<<<< HEAD
-
-// Classe principal da tela Home, utilizando StatelessWidget porque não há estado dinâmico
-=======
-
-// Classe principal da tela Home, utilizando StatelessWidget porque não há estado dinâmico
-=======
-import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
->>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   // Função assíncrona para abrir o link do Instagram no navegador
   Future<void> _abrirInstagram(BuildContext context) async {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
     const String url =
         'https://www.instagram.com/ajoinvilleskate?igsh=MW1kNTFmb2xlcGtteQ=='; // URL do Instagram
 
@@ -90,39 +64,11 @@ class HomeScreen extends StatelessWidget {
     if (user != null) {
       // Caso o usuário esteja autenticado, permanece na tela atual
       _mostrarMensagemErro(context, 'Você já está logado.');
-<<<<<<< HEAD
     } else {
       // Caso contrário, navegue para a tela de login
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
-=======
-<<<<<<< HEAD
-    } else {
-      // Caso contrário, navegue para a tela de login
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-=======
-    } else {
-      // Caso contrário, navegue para a tela de login
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-=======
-    const url = 'https://www.instagram.com/ajoinvilleskate';
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text(
-              'Não foi possível abrir o link do Instagram. Verifique se há um navegador disponível.'),
-          duration: Duration(seconds: 3),
-        ),
->>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
       );
     }
   }
@@ -130,13 +76,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      // Define a estrutura principal da tela
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
       // Define a estrutura principal da tela
       appBar: AppBar(
         backgroundColor: Colors.grey[200], // Cor de fundo do AppBar
@@ -159,49 +98,10 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.person,
                 color: Colors.black), // Ícone de perfil em preto
             onPressed: () => _onProfileIconPressed(context), // Validação e navegação condicional
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
-      appBar: AppBar(
-        backgroundColor: Colors.grey[200], // Cor de fundo do AppBar
-        elevation: 0, // Remove a sombra do AppBar
-        leading: Builder(
-          builder: (context) {
-            // Botão de menu hambúrguer para abrir o Drawer
-            return IconButton(
-              icon: const Icon(Icons.menu,
-                  color: Colors.black), // Ícone do menu em preto
-              onPressed: () {
-                Scaffold.of(context).openDrawer(); // Abre o menu lateral
-              },
-            );
-          },
-        ),
-        actions: [
-          // Ícone de perfil no AppBar
-          IconButton(
-<<<<<<< HEAD
-            icon: const Icon(Icons.person,
-                color: Colors.black), // Ícone de perfil em preto
-            onPressed: () => _onProfileIconPressed(context), // Validação e navegação condicional
-=======
-            icon: const Icon(Icons.person, color: Colors.black),
-            onPressed: () => Navigator.pushNamed(context, '/'),
->>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
           ),
         ],
       ),
       drawer: Drawer(
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
         // Define o menu lateral da tela
         child: Container(
           decoration: BoxDecoration(
@@ -235,106 +135,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 16), // Espaçamento entre logo e texto
                   ],
-<<<<<<< HEAD
-=======
                 ),
-              ),
-              // Opção do menu: "Quem somos"
-              ListTile(
-                leading: const Icon(Icons.info,
-                    color: Color.fromARGB(172, 189, 189, 189)), // Ícone cinza
-                title: const Text(
-                  'Quem somos',
-                  style: TextStyle(
-                      fontSize: 18, color: Colors.black87), // Estilo do texto
-                ),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              const SomosScreen())); // Navega para a tela "Quem somos"
-                },
-              ),
-              // Opção do menu: Instagram
-              ListTile(
-                leading: const Icon(Icons.camera,
-                    color: Color.fromARGB(172, 189, 189, 189)), // Ícone cinza
-                title: const Text(
-                  'Instagram',
-                  style: TextStyle(
-                      fontSize: 18, color: Colors.black87), // Estilo do texto
-                ),
-                onTap: () {
-                  Navigator.of(context).pop(); // Fecha o Drawer
-                  _abrirInstagram(context); // Abre o Instagram
-                },
-              ),
-              // Opção do menu: Logout
-              ListTile(
-                leading: const Icon(Icons.logout,
-                    color: Color.fromARGB(172, 189, 189, 189)), // Ícone de logout
-                title: const Text(
-                  'Sair',
-                  style: TextStyle(
-                      fontSize: 18, color: Colors.black87), // Estilo do texto
-                ),
-                onTap: () => _logout(context), // Executa o logout
-              ),
-            ],
-          ),
-        ),
-      ),
-      // Conteúdo principal da tela
-      body: Column(
-        children: [
-          const SizedBox(height: 20), // Espaçamento superior
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0), // Espaçamento lateral
-            child: const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(), // Adiciona borda ao campo de texto
-                labelText: 'Pesquise aqui seu evento', // Texto de instrução
-                suffixIcon: Icon(Icons.search), // Ícone de busca
-              ),
-            ),
-          ),
-          const SizedBox(height: 20), // Espaçamento entre elementos
-<<<<<<< HEAD
-          // Container para exibir a imagem de evento
-          Container(
-            height: 300, // Altura do container
-            width: double.infinity, // Largura total da tela
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/imageEvento2.png'), // Caminho para a imagem
-                fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço do container
-=======
-          // Container para imagem de evento (placeholder)
-          Container(
-            height: 300, // Altura do container
-            width: double.infinity, // Largura total da tela
-            color: Colors.grey[300], // Cor de fundo cinza claro
-            child: const Center(
-              child: Text(
-                'Imagem do Evento', // Texto exibido como placeholder
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-=======
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.grey[800]!, Colors.grey[500]!],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
-                ),
->>>>>>> 23f521ce005d434e774b12283b0c8d94b6585147
               ),
               // Opção do menu: "Quem somos"
               ListTile(
@@ -399,7 +200,6 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 20), // Espaçamento entre elementos
           // Container para exibir a imagem de evento
           Container(
-<<<<<<< HEAD
             height: 300, // Altura do container
             width: double.infinity, // Largura total da tela
             decoration: BoxDecoration(
@@ -407,31 +207,6 @@ class HomeScreen extends StatelessWidget {
                 image: AssetImage('assets/images/imageEvento2.png'), // Caminho para a imagem
                 fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço do container
               ),
-=======
-            height: 300,
-            width: double.infinity,
-            color: Colors.grey[300],
-            child: Stack(
-              children: [
-                Image.asset(
-                  'assets/images/imageEvento2.png',
-                  width: double.infinity,
-                  height: 300,
-                  fit: BoxFit.cover,
->>>>>>> 52288620acbf2d32eca7ecfe52327286122809cc
-                ),
-                const Center(
-                  child: Text(
-                    'Imagem do Evento',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
->>>>>>> 28406ce05fb7dff43a91b1fd6d9d286055fdd58c
             ),
           ),
         ],
