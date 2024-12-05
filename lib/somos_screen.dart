@@ -1,5 +1,4 @@
 import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
-import 'package:ajs/login_screen.dart'; // Importa a tela de login
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
 
 // Classe responsável pela tela "Quem Somos". É um StatelessWidget porque não possui estado dinâmico.
