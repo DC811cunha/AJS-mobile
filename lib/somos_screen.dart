@@ -1,72 +1,10 @@
 import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
 import 'package:ajs/login_screen.dart'; // Importa a tela de login
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
-import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o Supabase para autenticação
 
 // Classe principal da tela "Quem Somos", usando StatelessWidget porque não há estado dinâmico
 class SomosScreen extends StatelessWidget {
   const SomosScreen({Key? key}) : super(key: key);
-
-  // Método para redirecionar condicionalmente com base no estado do usuário
-  void _onProfileIconPressed(BuildContext context) {
-    final user = Supabase.instance.client.auth.currentUser; // Verifica o usuário atual
-
-    if (user != null) {
-      // Se o usuário estiver autenticado, redireciona para a HomeScreen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
-    } else {
-      // Caso contrário, redireciona para a LoginScreen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-        ),
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'AJS Skate', // Define o título do aplicativo
-      debugShowCheckedModeBanner: false, // Remove o banner de depuração do canto superior direito
-      theme: ThemeData(
-        primarySwatch: Colors.grey, // Define o tema principal com uma paleta de cinza
-      ),
-      home: SkateScreen(), // Define SkateScreen como a tela inicial
-    );
-  }
-}
-
-// Tela principal da página Skate
-class SkateScreen extends StatelessWidget {
-  // Método para redirecionar condicionalmente com base no estado do usuário
-  void _onProfileIconPressed(BuildContext context) {
-    final user = Supabase.instance.client.auth.currentUser; // Verifica o usuário atual
-
-    if (user != null) {
-      // Se o usuário estiver autenticado, redireciona para a HomeScreen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
-        ),
-      );
-    } else {
-      // Caso contrário, redireciona para a LoginScreen
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,25 +14,14 @@ class SkateScreen extends StatelessWidget {
         backgroundColor: Colors.grey[300], // Define a cor de fundo da AppBar como cinza claro
         elevation: 0, // Remove a sombra padrão da AppBar
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back,
-              color: Colors.black), // Ícone de seta para voltar na cor preta
+          icon: const Icon(Icons.arrow_back, color: Colors.black), // Ícone de seta para voltar
           onPressed: () {
-            // Ação ao pressionar o botão
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const HomeScreen(), // Redireciona para a tela principal (HomeScreen)
-              ),
+              MaterialPageRoute(builder: (context) => const HomeScreen()), // Redireciona para a HomeScreen
             );
           },
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person,
-                color: Colors.black), // Ícone de perfil na cor preta
-            onPressed: () => _onProfileIconPressed(context), // Navegação condicional com base no usuário
-          ),
-        ],
       ),
       // Corpo principal da tela
       body: SingleChildScrollView(
@@ -102,12 +29,10 @@ class SkateScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0), // Define espaçamento ao redor do conteúdo
           child: Column(
-            // Organiza os widgets verticalmente
             children: [
               // Exibição da logo
               Center(
                 child: ClipOval(
-                  // Torna a imagem circular
                   child: Image.asset(
                     'assets/images/logoNormal.png', // Caminho para a imagem
                     height: 200, // Define altura da imagem
@@ -116,7 +41,7 @@ class SkateScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Adiciona espaçamento vertical
+              const SizedBox(height: 20), // Espaçamento vertical
 
               // Texto descritivo sobre o skate
               const Text(

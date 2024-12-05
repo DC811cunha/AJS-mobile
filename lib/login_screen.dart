@@ -3,79 +3,72 @@ import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o cliente Su
 import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
 import 'package:ajs/signup_screen.dart'; // Importa a tela de cadastro (Sign-up)
 
-// Classe principal da tela de login, utilizando StatefulWidget porque há estado dinâmico
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState(); // Cria o estado da tela de login
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // Controladores de texto para capturar entrada de email e senha
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  // Função assíncrona para realizar o login
-  Future<void> _login() async {
-    final email = _emailController.text.trim(); // Obtém o email do campo de entrada
-    final password = _passwordController.text.trim(); // Obtém a senha do campo de entrada
+  // Adiciona uma chave global para validação de formulário
+  final _formKey = GlobalKey<FormState>();
 
-    // Verifica se os campos estão preenchidos
-    if (email.isEmpty || password.isEmpty) {
-      _showErrorDialog('Por favor, preencha todos os campos.'); // Mostra mensagem de erro
-      return;
+  Future<void> _login() async {
+    if (!_formKey.currentState!.validate()) {
+      return; // Retorna se a validação do formulário falhar
     }
 
-    // Exibe um indicador de carregamento durante o login
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
     showDialog(
       context: context,
-      barrierDismissible: false, // Impede que o usuário feche o diálogo clicando fora dele
-      builder: (context) => const Center(child: CircularProgressIndicator()), // Mostra indicador de progresso
+      barrierDismissible: false,
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
     try {
-      // Realiza a tentativa de login usando Supabase
       final response = await Supabase.instance.client.auth.signInWithPassword(
         email: email,
         password: password,
       );
 
-      // Fecha o indicador de carregamento
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(); // Fecha o indicador de carregamento
 
-      // Verifica se o login foi bem-sucedido
       if (response.user != null) {
-        // Redireciona para a tela principal (HomeScreen) em caso de sucesso
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),
         );
       } else {
-        // Mostra mensagem de erro em caso de falha desconhecida
         _showErrorDialog('Erro desconhecido ao fazer login.');
       }
     } catch (e) {
-      // Fecha o indicador de carregamento em caso de erro
       Navigator.of(context).pop();
-      // Mostra mensagem de erro detalhada
-      _showErrorDialog('Ocorreu um erro: ${e is AuthException ? e.message : e.toString()}');
+      String errorMessage = e is AuthException ? e.message : 'Erro inesperado: ${e.toString()}';
+
+      // Substitui mensagens específicas para português
+      if (errorMessage.contains("Invalid login credentials")) {
+        errorMessage = "Credenciais de login inválidas. Verifique seu e-mail e senha.";
+      }
+
+      _showErrorDialog(errorMessage);
     }
   }
 
-  // Função para exibir mensagens de erro em um AlertDialog
   void _showErrorDialog(String message) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Erro de login'), // Título do diálogo
-        content: Text(message), // Mensagem de erro
+        title: const Text('Erro ao fazer login'),
+        content: Text(message),
         actions: [
-          // Botão de OK para fechar o diálogo
           TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Fecha o diálogo
-            },
+            onPressed: () => Navigator.of(context).pop(),
             child: const Text('OK'),
           ),
         ],
@@ -86,122 +79,141 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(172, 189, 189, 189), // Cor de fundo da tela
+      backgroundColor: const Color.fromARGB(172, 189, 189, 189),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0), // Define espaçamento lateral
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // Centraliza o conteúdo verticalmente
-            children: [
-              // Exibição da logo do aplicativo
-              SizedBox(
-                height: 150,
-                child: Center(
-                  child: ClipOval(
-                    child: Image.asset(
-                      'assets/images/logoNormal.png', // Caminho para a logo
-                      height: 150,
-                      width: 150,
-                      fit: BoxFit.cover, // Ajusta a imagem dentro do espaço definido
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 40), // Espaçamento vertical
-
-              // Campo de entrada para email
-              TextField(
-                controller: _emailController, // Controlador para capturar o email
-                decoration: const InputDecoration(
-                  labelText: 'E-MAIL', // Rótulo do campo
-                  border: OutlineInputBorder(), // Borda ao redor do campo
-                  filled: true,
-                  fillColor: Colors.white, // Fundo branco para o campo
-                ),
-              ),
-              const SizedBox(height: 20), // Espaçamento vertical
-
-              // Campo de entrada para senha
-              TextField(
-                controller: _passwordController, // Controlador para capturar a senha
-                obscureText: true, // Oculta o texto digitado (modo senha)
-                decoration: const InputDecoration(
-                  labelText: 'PASSWORD', // Rótulo do campo
-                  border: OutlineInputBorder(), // Borda ao redor do campo
-                  filled: true,
-                  fillColor: Colors.white, // Fundo branco para o campo
-                ),
-              ),
-              const SizedBox(height: 20), // Espaçamento vertical
-
-              // Botão para realizar o login
-              SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                  onPressed: _login, // Chama a função de login ao pressionar
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue, // Cor do botão
-                    padding: const EdgeInsets.symmetric(vertical: 12.0), // Padding interno
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), // Bordas arredondadas
-                    ),
-                  ),
-                  child: const Text(
-                    'ENTRAR', // Texto exibido no botão
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black, // Cor do texto
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20), // Espaçamento vertical
-
-              // Link para recuperação de senha
-              TextButton(
-                onPressed: () {
-                  // Implementar lógica de recuperação de senha no futuro
-                },
-                child: const Text(
-                  'Esqueci a senha', // Texto do botão
-                  style: TextStyle(color: Colors.black54), // Estilo do texto
-                ),
-              ),
-              const SizedBox(height: 10), // Espaçamento vertical
-
-              // Texto informativo sobre a criação de conta
-              const Text("Não tem uma conta no APP? É GRÁTIS"),
-              const SizedBox(height: 10), // Espaçamento vertical
-
-              // Botão para redirecionar para a tela de cadastro
-              SizedBox(
-                width: 250,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const CadastroScreen(), // Redireciona para a tela de cadastro
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Form(
+            key: _formKey, // Adiciona validação ao formulário
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Exibição da logo do aplicativo
+                SizedBox(
+                  height: 150,
+                  child: Center(
+                    child: ClipOval(
+                      child: Image.asset(
+                        'assets/images/logoNormal.png',
+                        height: 150,
+                        width: 150,
+                        fit: BoxFit.cover,
                       ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange, // Cor do botão
-                    padding: const EdgeInsets.symmetric(vertical: 12.0), // Padding interno
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8), // Bordas arredondadas
-                    ),
-                  ),
-                  child: const Text(
-                    'Crie sua conta aqui', // Texto exibido no botão
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black, // Cor do texto
                     ),
                   ),
                 ),
-              ),
-            ],
+                const SizedBox(height: 40),
+
+                // Campo de entrada para email
+                TextFormField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(
+                    labelText: 'E-MAIL',
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira seu e-mail.';
+                    }
+                    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                      return 'Por favor, insira um e-mail válido.';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Campo de entrada para senha
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'SENHA',
+                    border: OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Por favor, insira sua senha.';
+                    }
+                    if (value.length < 6) {
+                      return 'A senha deve ter pelo menos 6 caracteres.';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Botão para realizar o login
+                SizedBox(
+                  width: 250,
+                  child: ElevatedButton(
+                    onPressed: _login,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'ENTRAR',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+
+                // Link para recuperação de senha
+                TextButton(
+                  onPressed: () {
+                    // Lógica para recuperação de senha
+                  },
+                  child: const Text(
+                    'Esqueci a senha',
+                    style: TextStyle(color: Colors.black54),
+                  ),
+                ),
+                const SizedBox(height: 10),
+
+                const Text("Não tem uma conta no APP? É GRÁTIS"),
+                const SizedBox(height: 10),
+
+                // Botão para redirecionar para a tela de cadastro
+                SizedBox(
+                  width: 250,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const CadastroScreen()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.orange,
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Crie sua conta aqui',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,61 +1,62 @@
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
 import 'package:supabase_flutter/supabase_flutter.dart'; // Importa o pacote Supabase para autenticação e banco de dados
 import 'package:ajs/home_screen.dart'; // Importa a tela Home
+import 'package:ajs/login_screen.dart'; // Importa a tela de login
 
-// Classe principal da tela de cadastro, utilizando StatefulWidget pois há interação dinâmica
 class CadastroScreen extends StatefulWidget {
   const CadastroScreen({Key? key}) : super(key: key);
 
   @override
-  State<CadastroScreen> createState() => _CadastroScreenState(); // Cria o estado para a tela de cadastro
+  State<CadastroScreen> createState() => _CadastroScreenState();
 }
 
 class _CadastroScreenState extends State<CadastroScreen> {
-  // Controladores para capturar os dados de entrada do usuário
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-
-  // Chave para validar o formulário
   final _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false; // Controle de visibilidade da senha
+  bool _isConfirmPasswordVisible = false; // Controle de visibilidade da confirmação de senha
 
-  // Função assíncrona para realizar o cadastro do usuário
   Future<void> _signUp() async {
-    // Valida os campos do formulário
     if (_formKey.currentState!.validate()) {
-      final email = _emailController.text.trim(); // Captura o e-mail do usuário
-      final password = _passwordController.text.trim(); // Captura a senha do usuário
-      final name = _nameController.text.trim(); // Captura o nome completo do usuário
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+      final name = _nameController.text.trim();
 
       try {
-        // Realiza o cadastro no Supabase
         final response = await Supabase.instance.client.auth.signUp(
           email: email,
           password: password,
-          data: {'full_name': name}, // Adiciona o nome completo como dado extra
+          data: {'full_name': name},
         );
 
         if (response.user != null) {
-          // Exibe mensagem de sucesso
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Cadastro realizado com sucesso!')),
           );
 
-          // Redireciona o usuário para a tela inicial (HomeScreen)
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
           );
         } else {
-          // Mensagem de erro em caso de resposta inesperada
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Erro inesperado ao criar a conta.')),
           );
         }
       } catch (e) {
-        // Exibe mensagem de erro em caso de falha
+        String errorMessage = 'Erro ao criar a conta.';
+        if (e is AuthException) {
+          if (e.message.contains('already registered')) {
+            errorMessage = 'Este e-mail já está cadastrado. Por favor, use outro e-mail.';
+          } else {
+            errorMessage = e.message; // Outras mensagens do Supabase
+          }
+        }
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Erro ao criar a conta: $e')),
+          SnackBar(content: Text(errorMessage)),
         );
       }
     }
@@ -63,63 +64,78 @@ class _CadastroScreenState extends State<CadastroScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const Color backgroundColor = Color.fromARGB(172, 189, 189, 189);
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(172, 189, 189, 189), // Define a cor de fundo da tela
+      backgroundColor: backgroundColor,
+      appBar: AppBar(
+        backgroundColor: backgroundColor, // Garante consistência de cores
+        elevation: 0, // Remove a sombra padrão
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black), // Ícone de seta para voltar
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const LoginScreen()), // Volta para a tela de login
+            );
+          },
+        ),
+      ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0), // Espaçamento lateral
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Form(
-            key: _formKey, // Associa o formulário à chave para validação
+            key: _formKey,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Centraliza o conteúdo verticalmente
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Exibição da logo
                 SizedBox(
                   height: 150,
                   child: Center(
                     child: ClipOval(
                       child: Image.asset(
-                        'assets/images/logoNormal.png', // Caminho para a imagem da logo
+                        'assets/images/logoNormal.png',
                         height: 150,
                         width: 150,
-                        fit: BoxFit.cover, // Ajusta a imagem dentro de um formato oval
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 40), // Espaçamento vertical
+                const SizedBox(height: 40),
 
-                // Campo de entrada para o nome completo
+                // Campo de entrada para Nome Completo
                 TextFormField(
-                  controller: _nameController, // Controlador para capturar o nome
+                  controller: _nameController,
                   decoration: const InputDecoration(
-                    labelText: 'NOME COMPLETO', // Rótulo do campo
-                    border: OutlineInputBorder(), // Borda ao redor do campo
+                    labelText: 'NOME COMPLETO',
+                    border: OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.white, // Fundo branco para o campo
+                    fillColor: Colors.white,
                   ),
                   validator: (value) {
-                    // Validação: verifica se o campo não está vazio
                     if (value == null || value.isEmpty) {
+                      return 'Por favor, insira seu nome completo.';
+                    }
+                    if (value.split(' ').length < 2) {
                       return 'Por favor, insira seu nome completo.';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 20), // Espaçamento vertical
+                const SizedBox(height: 20),
 
-                // Campo de entrada para o e-mail
+                // Campo de entrada para Email
                 TextFormField(
-                  controller: _emailController, // Controlador para capturar o e-mail
+                  controller: _emailController,
                   decoration: const InputDecoration(
-                    labelText: 'E-MAIL', // Rótulo do campo
-                    border: OutlineInputBorder(), // Borda ao redor do campo
+                    labelText: 'E-MAIL',
+                    border: OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.white, // Fundo branco para o campo
+                    fillColor: Colors.white,
                   ),
-                  keyboardType: TextInputType.emailAddress, // Define o tipo de teclado como de e-mail
+                  keyboardType: TextInputType.emailAddress,
                   validator: (value) {
-                    // Validação: verifica se o campo não está vazio e se o e-mail é válido
                     if (value == null || value.isEmpty) {
                       return 'Por favor, insira seu e-mail.';
                     }
@@ -129,45 +145,83 @@ class _CadastroScreenState extends State<CadastroScreen> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 20), // Espaçamento vertical
+                const SizedBox(height: 20),
 
-                // Campo de entrada para a senha
+                // Campo de entrada para Senha
                 TextFormField(
-                  controller: _passwordController, // Controlador para capturar a senha
-                  obscureText: true, // Oculta o texto digitado (modo senha)
-                  decoration: const InputDecoration(
-                    labelText: 'SENHA', // Rótulo do campo
-                    border: OutlineInputBorder(), // Borda ao redor do campo
+                  controller: _passwordController,
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
+                    labelText: 'SENHA',
+                    border: const OutlineInputBorder(),
                     filled: true,
-                    fillColor: Colors.white, // Fundo branco para o campo
+                    fillColor: Colors.white,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
                   ),
                   validator: (value) {
-                    // Validação: verifica se a senha tem pelo menos 6 caracteres
                     if (value == null || value.length < 6) {
                       return 'A senha deve ter pelo menos 6 caracteres.';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 20), // Espaçamento vertical
+                const SizedBox(height: 20),
 
-                // Botão para realizar o cadastro
+                // Campo de entrada para Confirmar Senha
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  obscureText: !_isConfirmPasswordVisible,
+                  decoration: InputDecoration(
+                    labelText: 'CONFIRMAR SENHA',
+                    border: const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                        });
+                      },
+                    ),
+                  ),
+                  validator: (value) {
+                    if (value != _passwordController.text) {
+                      return 'As senhas não coincidem.';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 20),
+
+                // Botão de Cadastro
                 SizedBox(
-                  width: 250, // Largura do botão
+                  width: 250,
                   child: ElevatedButton(
-                    onPressed: _signUp, // Chama a função de cadastro ao pressionar o botão
+                    onPressed: _signUp,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue, // Cor do botão
-                      padding: const EdgeInsets.symmetric(vertical: 12.0), // Padding interno do botão
+                      backgroundColor: Colors.blue,
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8), // Bordas arredondadas
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: const Text(
-                      'CADASTRAR', // Texto exibido no botão
+                      'CADASTRAR',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black, // Cor do texto
+                        color: Colors.black,
                       ),
                     ),
                   ),
