@@ -77,7 +77,7 @@ O **AJS Skate App** é um aplicativo mobile que oferece:
 ---
 
 ### **Vídeo do Aplicativo**
-[Link para o vídeo de apresentação do aplicativo (máximo de 3 minutos).](https://youtu.be/seu-video-exemplo)
+![Vídeo Aplicativo](assets/images/AppNavegacao.mp4)
 
 ---
 

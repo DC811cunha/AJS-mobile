@@ -61,6 +61,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/images/AppNavegacao.mp4  # Adicione o caminho para o arquivo
     - assets/images/imageEvento1.jpg  # Adicione o caminho para o arquivo
     - assets/images/imageEvento2.png  # Adicione o caminho para o arquivo
     - assets/images/imageEvento3.png  # Adicione o caminho para o arquivo
