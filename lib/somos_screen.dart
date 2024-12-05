@@ -2,46 +2,49 @@ import 'package:ajs/home_screen.dart'; // Importa a tela principal (Home)
 import 'package:ajs/login_screen.dart'; // Importa a tela de login
 import 'package:flutter/material.dart'; // Importa widgets e temas do Flutter
 
-// Classe principal da tela "Quem Somos", usando StatelessWidget porque não há estado dinâmico
+// Classe responsável pela tela "Quem Somos". É um StatelessWidget porque não possui estado dinâmico.
 class SomosScreen extends StatelessWidget {
   const SomosScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Scaffold fornece a estrutura básica da tela
+      // Estrutura básica da tela utilizando Scaffold
       appBar: AppBar(
-        backgroundColor: Colors.grey[300], // Define a cor de fundo da AppBar como cinza claro
-        elevation: 0, // Remove a sombra padrão da AppBar
+        backgroundColor: Colors.grey[300], // Define a cor de fundo do AppBar como cinza claro
+        elevation: 0, // Remove a sombra padrão do AppBar
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black), // Ícone de seta para voltar
           onPressed: () {
+            // Ação ao pressionar o botão de voltar: redireciona para a tela principal (HomeScreen)
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()), // Redireciona para a HomeScreen
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           },
         ),
       ),
       // Corpo principal da tela
       body: SingleChildScrollView(
-        // Permite rolar o conteúdo caso exceda o espaço disponível na tela
+        // Permite que o conteúdo seja rolável caso ultrapasse a altura disponível na tela
         child: Padding(
-          padding: const EdgeInsets.all(16.0), // Define espaçamento ao redor do conteúdo
+          padding: const EdgeInsets.all(16.0), // Adiciona espaçamento ao redor do conteúdo
           child: Column(
+            // Alinha os widgets de forma vertical
             children: [
-              // Exibição da logo
+              // Exibe a logo em formato circular
               Center(
                 child: ClipOval(
+                  // Torna a imagem circular
                   child: Image.asset(
-                    'assets/images/logoNormal.png', // Caminho para a imagem
-                    height: 200, // Define altura da imagem
-                    width: 200, // Define largura da imagem
-                    fit: BoxFit.cover, // Ajusta a imagem para cobrir o espaço disponível
+                    'assets/images/logoNormal.png', // Caminho para a imagem da logo
+                    height: 200, // Define a altura da imagem
+                    width: 200, // Define a largura da imagem
+                    fit: BoxFit.cover, // Ajusta a imagem para preencher o espaço disponível
                   ),
                 ),
               ),
-              const SizedBox(height: 20), // Espaçamento vertical
+              const SizedBox(height: 20), // Adiciona espaçamento vertical após a logo
 
               // Texto descritivo sobre o skate
               const Text(
@@ -52,9 +55,9 @@ class SomosScreen extends StatelessWidget {
                 'É um espaço onde a criatividade floresce e as barreiras desaparecem. Aqui, skatistas novatos aprendem com os mais '
                 'experientes, compartilhando dicas e truques enquanto se ajudam mutuamente a evoluir.',
                 style: TextStyle(
-                  fontSize: 16, // Tamanho do texto
-                  height: 1.5, // Altura da linha (espaçamento entre linhas)
-                  color: Colors.black, // Cor do texto
+                  fontSize: 16, // Define o tamanho do texto
+                  height: 1.5, // Define o espaçamento entre as linhas do texto
+                  color: Colors.black, // Define a cor do texto
                 ),
                 textAlign: TextAlign.center, // Centraliza o texto horizontalmente
               ),
